@@ -31,7 +31,7 @@ class PhoneBook
 	public:
 		PhoneBook();
 		void AddContact(Contact contact);
-		void SearchContact(int index);
+		int SearchContact(int index);
 		int GetCount() const;
 };
 #endif 

@@ -61,12 +61,12 @@ void print_string(const std::string& str)
         std::cout << str.substr(0, 9) << ".";
 }
 
-void PhoneBook::SearchContact(int index)
+int PhoneBook::SearchContact(int index)
 {
     if (index > this->count - 1)
     {
         std::cout << "Out of range\n";
-        return ;
+        return 0;
     }
     Contact contact = contacts[index];
     std::cout << index ;
@@ -77,5 +77,5 @@ void PhoneBook::SearchContact(int index)
     std::cout << " | ";
     print_string(contact.GetNickName());
     std::cout << std::endl;
-    return;
+    return 1;
 }

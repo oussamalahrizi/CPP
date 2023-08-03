@@ -45,22 +45,29 @@ void CaseSearch(PhoneBook &book)
         std::cout << "Contact list is empty\n";
         return ;
     }
-    while (1)
+    int i = 0;
+
+    while (i < book.GetCount())
     {
-        std::cout << "Enter index 0 - " << book.GetCount() - 1 << " : ";
-        std::getline(std::cin, read);
-        if (std::cin.eof() || read.empty())
-        {
-            std::cin.clear();
-            std::cout << "Error\n";
-            return ;
-        }
-        int index = std::atoi(read.data());
-        if(index < 0 || index > 7)
-            std::cout << "invalid index\n";
-        else
-            book.SearchContact(index);
+        book.SearchContact(i);
+        i++;
     }
+    std::cout << "Enter index 0 - " << book.GetCount() - 1 << " : ";
+    std::getline(std::cin, read);
+    if (std::cin.eof() || read.empty())
+    {
+        std::cin.clear();
+        std::cout << "Error\n";
+        return ;
+    }
+    int index = std::atoi(read.data());
+    if(index < 0 || index > 7)
+    {
+        std::cout << "invalid index\n";
+        return;
+    }
+    if (book.SearchContact(index) == 0)
+        return;
 }
 
 int main(void)

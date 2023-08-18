@@ -36,7 +36,7 @@ class Fixed
         // arithmetic
         Fixed operator+(const Fixed& other) const;
         Fixed operator-(const Fixed& other) const;
-        Fixed operator*(const Fixed& other) const;
+        float operator*(const Fixed& other) const;
         Fixed operator/(const Fixed& other) const;
         // member functions
         static Fixed& min(Fixed& left, Fixed& right);

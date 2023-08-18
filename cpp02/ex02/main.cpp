@@ -3,7 +3,9 @@
 
 int main( void )
 {
-    Fixed a(10.5f);
-    std::cout << a / 0.0f << std::endl;
+    Fixed a ( Fixed(2.0f) * Fixed(0.5f));
+    
+    std::cout << "a address : " << &a << std::endl;
+
     return 0;
 }

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#define DEFAULT "* LOUD AND UNBEARABLE FEEDBACK NOISE *"
+# define DEFAULT "* LOUD AND UNBEARABLE FEEDBACK NOISE *"
 
 std::string string_toupper(char *str)
 {

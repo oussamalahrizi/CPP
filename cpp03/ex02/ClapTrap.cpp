@@ -2,23 +2,23 @@
 
 ClapTrap::ClapTrap() : HP(10), EP(10), AD(0)
 {
-    std::cout << "Default constructor called" << std::endl;
+    std::cout << "ClapTrap Default constructor called" << std::endl;
 }
 
 ClapTrap::~ClapTrap()
 {
-    std::cout << "Destructor called" << std::endl;
+    std::cout << "ClapTrap Destructor called" << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string& name) :  HP(10), EP(10), AD(0)
 {
     Name = name;
-    std::cout << "Name constructor called" << std::endl;
+    std::cout << "ClapTrap Name constructor called" << std::endl;
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& other)
 {
-    std::cout << "Copy assignement operator called" << std::endl;
+    std::cout << "ClapTrap Copy assignement operator called" << std::endl;
     if(this != &other)
     {
         Name = other.Name;
@@ -31,7 +31,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& other)
 
 ClapTrap::ClapTrap(const ClapTrap& other)
 {
-    std::cout << "Copy constructor called" << std::endl;
+    std::cout << "ClapTrap Copy constructor called" << std::endl;
     *this = other;
 }
 
@@ -59,7 +59,7 @@ void ClapTrap::attack(const std::string& target)
 {
     if (this->EP == 0 || this->HP == 0)
     {
-        std::cout << "Cant attack " << target << ", no HP / EP left" << std::endl;
+        std::cout << "ClapTrap Cant attack " << target << ", no HP / EP left" << std::endl;
         return ;
     }
     EP--;
@@ -83,12 +83,12 @@ void ClapTrap::beRepaired(unsigned int amount)
 {
     if (HP == 0)
     {
-        std::cout << "Cant be repaired, No HP left" << std::endl;
+        std::cout << "ClapTrap Cant be repaired, No HP left" << std::endl;
         return;
     }
     else if (EP == 0)
     {
-        std::cout << "Cant be repaired, Not enough EP" << std::endl;
+        std::cout << "ClapTrap Cant be repaired, Not enough EP" << std::endl;
         return;
     }
     HP += amount;

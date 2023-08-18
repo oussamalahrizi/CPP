@@ -2,11 +2,7 @@
 
 HumanB::HumanB() {}
 
-HumanB::HumanB(std::string name)
-{
-    this->name = name;
-    this->weapon = NULL;
-}
+HumanB::HumanB(std::string name) : weapon(NULL), name(name) {}
 
 void HumanB::setWeapon(Weapon &weapon)
 {

@@ -36,13 +36,13 @@ int get_level(std::string &level)
 {
     int index = -1;
 
-    if (level == "debug")
+    if (level == "DEBUG")
         index = 0;
-    else if (level == "info")
+    else if (level == "INFO")
         index = 1;
-    else if (level == "warning")
+    else if (level == "WARNING")
         index = 2;
-    else if (level == "error")
+    else if (level == "ERROR")
         index = 3;
     return (index);
 }

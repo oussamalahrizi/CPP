@@ -6,10 +6,13 @@ void replace(std::string &line, std::string &s1, std::string &s2)
 {
     size_t i = 0;
 
+    if (s1 == s2)
+        return;
     while (!s1.empty() && (i = line.find(s1, i) ) != std::string::npos)
     {
         line.erase(i, s1.length());
         line.insert(i, s2);
+        i += s2.length();
     }
 }
 

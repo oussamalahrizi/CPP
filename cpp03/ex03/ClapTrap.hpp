@@ -5,7 +5,7 @@
 
 class ClapTrap
 {
-    private:
+    protected:
         std::string Name;
         unsigned int HP;
         unsigned int EP;
@@ -14,7 +14,7 @@ class ClapTrap
     public:
         //constructors
         ClapTrap();
-        ClapTrap(std::string& name);
+        ClapTrap(std::string name);
         ClapTrap(const ClapTrap& other);
         ~ClapTrap();
     
@@ -22,7 +22,7 @@ class ClapTrap
         ClapTrap& operator=(const ClapTrap& other);
     
         // member functions
-        void attack(const std::string& target);
+        virtual void attack(const std::string& target);
         void takeDamage(unsigned int amount);
         void beRepaired(unsigned int amount);
         std::string getName() const;

@@ -1,17 +1,53 @@
 #include "BitcoinExchange.hpp"
 
+const std::string BitcoinExchange::datafile = "data.csv";
+
+BitcoinExchange::BitcoinExchange(const std::string& file)
+{
+    this->data.open(this->datafile.c_str());
+    if (!this->data.is_open() || !this->data.good())
+    {
+        std::cerr   << "failed to open the data.csv file " <<
+                    "please make sure it exists in ./" <<
+                    std::endl;
+        exit(1); 
+    }
+    this->inputfile = file;
+    this->input.open(inputfile.c_str());
+    if (!this->input.is_open() || !this->input.good())
+    {
+        std::cerr   << "failed to open the input file " << std::endl;
+        exit(1); 
+    }
+    DoStuff();
+}
+
 BitcoinExchange::BitcoinExchange() {}
+
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& other)
 {
-    (void) other;
+    *this = other;
 }
+
 BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other)
 {
-    (void) other;
+    if (this != &other)
+    {
+        this->input.close();
+        this->data.close();
+        this->inputfile = other.inputfile;
+        this->input.open(inputfile.c_str());
+        this->data.open(this->datafile.c_str());
+        this->map = other.map;
+    }
     return *this;
 }
 
-BitcoinExchange::~BitcoinExchange() {}
+BitcoinExchange::~BitcoinExchange()
+{
+    this->data.close();
+    this->input.close();
+}
 
 int BitcoinExchange::CheckHead(std::string& line)
 {
@@ -68,7 +104,6 @@ int BitcoinExchange::handleDateValue(std::string& date, std::string& valueStr)
     error = checkDate(date);
     if (date.empty() || valueStr.empty()
         || error != "valid" || !isNumeric(valueStr))
-    
     {
         std::cerr << "Error : bad input => " + date + " | " + valueStr << std::endl;
         return (0);
@@ -105,29 +140,48 @@ void BitcoinExchange::handleLine(std::string& line)
     std::string value = line.substr(index + 3, line.length());
     if (!handleDateValue(date, value))
         return ;
-    
+    // std::cout << "return is : " << searchValue(date) << std::endl;
+    std::cout << date << " => ";
+    std::cout << value << " = ";
+    std::cout << searchValue(date) * atof(value.c_str()) << std::endl;
 }
 
-void BitcoinExchange::DoStuff(const std::string& input)
+void BitcoinExchange::DoStuff()
 {
-    std::ifstream inputfile(input.c_str());
-    std::ifstream db("data.csv");
-
-    if (!inputfile.good() || !inputfile.is_open())
-    {
-        std::cerr << "Failed to open input file" << std::endl;
-        return ;
-    }
-    if (!db.good() || !db.is_open())
-    {
-        std::cerr << "Failed to open the data base file" << std::endl;
-        return ;
-    }
+    readData();
     std::string line;
-    std::getline(inputfile, line);
+    std::getline(this->input, line);
     if (!CheckHead(line))
         return ;
-    while (std::getline(inputfile, line))
+    while (std::getline(input, line))
         handleLine(line);
-    inputfile.close();
 }
+
+void BitcoinExchange::readData()
+{
+    std::string line;
+    std::string key, value;
+
+    std::getline(this->data, line);
+    while (std::getline(this->data, line))
+    {
+        key = line.substr(0, 10);
+        value = line.substr(11, line.length());
+        map[key] = std::atof(value.c_str());
+    }
+}
+
+float BitcoinExchange::searchValue(const std::string& date)
+{
+    // calcuations done assuming the map container is date sorted
+    std::map<std::string , float>::iterator it = this->map.lower_bound(date);
+    if (it == this->map.begin() && date < it->first) // date given is less than any date
+        return (it->second);
+    else if (it == this->map.end()) // date given greater than anydate
+        it--;
+    else if (it->first != date) // date not found return the closest lower date
+        it--;
+    // otherwise the date is found
+    return (it->second);
+}
+

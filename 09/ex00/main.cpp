@@ -7,6 +7,6 @@ int main(int ac, char **av)
         std::cerr << "Invalid args " << std::endl;
         return (1);
     }
-    BitcoinExchange::DoStuff(av[1]);
+    BitcoinExchange e(av[1]);   
     return (0);
 }

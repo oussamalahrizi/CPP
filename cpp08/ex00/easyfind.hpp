@@ -6,23 +6,19 @@
 /*   By: olahrizi <olahrizi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 06:40:41 by olahrizi          #+#    #+#             */
-/*   Updated: 2023/12/22 02:49:42 by olahrizi         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:39:48 by olahrizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <algorithm>
-#include <exception>
 #include <stdexcept>
 
 template <typename T>
-bool easyfind(T &container, int value)
+typename T::value_type easyfind(T &container, int value)
 {
-	typename T::iterator begin = container.begin();
-	typename T::iterator end = container.end();
-	
-	for(typename T::iterator it = begin; it != end;  it++)
-		if (*it == value)
-			return(true);
-	throw std::runtime_error("value not found");
-	return(false);
+	typename T::iterator it = std::find(container.begin(), container.end(), value);
+	if (it == container.end())
+		throw std::runtime_error("exception : cant't find the value");
+	return (*it);	
 }
+
